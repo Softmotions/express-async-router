@@ -7,9 +7,9 @@
       "es2017",
       "dom"
 		],
-		"noImplicitAny": true,
-		"noImplicitReturns": true,
 		"strictNullChecks": true,
+		"noImplicitAny": false,
+		"noImplicitReturns": true,
     "noImplicitThis": false
 	},
 	"exclude": [

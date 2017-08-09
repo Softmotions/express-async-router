@@ -1,6 +1,6 @@
 {
-  "name": "express-async-router",
-  "version": "0.1.13",
+  "name": "expressjs-async-router",
+  "version": "0.1.14",
   "description": "Express Async Router - An Express Router wrapper which automatically manage Promise.",
   "main": "index.js",
   "license": "MIT",
@@ -14,9 +14,6 @@
     "type": "git",
     "url": "https://github.com/Softmotions/express-async-router.git"
   },
-  "bugs": {
-    "url": "https://github.com/spatools/express-async-router/issues"
-  },
   "keywords": [
     "express",
     "async",
@@ -25,6 +22,7 @@
     "es6"
   ],
   "scripts": {
+    "preinstall": "tsc",
     "test": "grunt"
   },
   "dependencies": {

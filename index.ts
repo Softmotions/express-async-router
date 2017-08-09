@@ -67,7 +67,7 @@ export function AsyncRouter(options?: AsyncRouterOptions): AsyncRouterInstance {
 
     wrapAllMatchers(asyncRouter, sender, innerRouter);
 
-    (<any>asyncRouter)[ASYNC_MARKER] = true;
+    asyncRouter[ASYNC_MARKER] = true;
     asyncRouter.param = function param(): AsyncRouterInstance {
         if (typeof arguments[1] === "function" && arguments[1].length === 3) {
             innerRouter.param(arguments[0], wrapParamHandler(arguments[1]));
@@ -131,7 +131,7 @@ function wrapAllMatchers(route: Router, sender?: AsyncRouterSender, router?: Rou
     router = router || route as Router;
 
     SHORTCUTS_METHODS.forEach(method => {
-        (<any>route)[method] = wrapMatcher(router!, (<any>route)[method], sender);
+        route[method] = wrapMatcher(router!, route[method], sender);
     });
 }
 
