@@ -6,9 +6,9 @@ export type Router = express.Router;
 export type Request = express.Request;
 export type Response = express.Response;
 
-export type ParamHandler = express.ParamHandler;
+export type ParamHandler = express.RequestParamHandler;
 export type RequestHandler = express.RequestHandler;
-export type ErrorHandler = express.ErrorHandler;
+export type ErrorHandler = express.ErrorRequestHandler;
 
 export type NextFunction = express.NextFunction;
 
@@ -52,7 +52,7 @@ export interface AsyncRouterInstance extends express.Router {
 
 //#endregion
 
-//#region Public 
+//#region Public
 
 const ASYNC_MARKER = typeof Symbol !== "undefined" ? Symbol("ASYNC_MARKER") : "__ASYNC_MARKER__";
 
