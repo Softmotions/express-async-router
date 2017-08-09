@@ -17,7 +17,7 @@ export type NextFunction = express.NextFunction;
 //#region Types and Constants
 
 const
-    DEFAULT_SENDER = (req, res, val) => { res.send(val); },
+    DEFAULT_SENDER = (req: any, res: any, val: any) => { res.send(val); },
     SHORTCUTS_METHODS = ["all", "get", "post", "put", "delete", "patch", "options", "head"];
 
 export type AsyncRouterParamHandler = (req: Request, res: Response, param: any) => any;
@@ -67,7 +67,7 @@ export function AsyncRouter(options?: AsyncRouterOptions): AsyncRouterInstance {
 
     wrapAllMatchers(asyncRouter, sender, innerRouter);
 
-    asyncRouter[ASYNC_MARKER] = true;
+    (<any>asyncRouter)[ASYNC_MARKER] = true;
     asyncRouter.param = function param(): AsyncRouterInstance {
         if (typeof arguments[1] === "function" && arguments[1].length === 3) {
             innerRouter.param(arguments[0], wrapParamHandler(arguments[1]));
@@ -122,6 +122,8 @@ function getSender(options: AsyncRouterOptions): AsyncRouterSender {
 
     if (send !== false) {
         return sender || DEFAULT_SENDER;
+    } else {
+        return undefined;
     }
 }
 
@@ -129,7 +131,7 @@ function wrapAllMatchers(route: Router, sender: AsyncRouterSender, router?: Rout
     router = router || route as Router;
 
     SHORTCUTS_METHODS.forEach(method => {
-        route[method] = wrapMatcher(router, router[method], sender);
+        (<any>route)[method] = wrapMatcher(router, (<any>route)[method], sender);
     });
 }
 
@@ -186,7 +188,7 @@ function wrapHandlerOrErrorHandler(handler: RequestHandler | ErrorHandler): Requ
         };
     }
 
-    return function(req, res, next): void {
+    return function(req: any, res: any, next: any): void {
         try {
             next = once(next);
             toCallback(handler.call(this, req, res, next), next, req, res, handler.length === 3);
@@ -197,7 +199,7 @@ function wrapHandlerOrErrorHandler(handler: RequestHandler | ErrorHandler): Requ
     };
 }
 
-function toCallback(thenable: PromiseLike<any>, next: Function, req: Request, res: Response, end?: boolean|((res) => any)): void {
+function toCallback(thenable: PromiseLike<any>, next: Function, req: Request, res: Response, end?: boolean|((res: any) => any)): void {
     if (!thenable || typeof thenable.then !== "function") {
         thenable = Promise.resolve(thenable);
     }
