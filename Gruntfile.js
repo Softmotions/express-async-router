@@ -34,6 +34,7 @@ module.exports = function (grunt) {
             comments: false,
             disallowbool: true,
             disallowimportmodule: true,
+            strictNullChecks: true,
             noImplicitAny: true,
             noImplicitReturns: true,
             noImplicitThis: false,

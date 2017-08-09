@@ -108,7 +108,7 @@ export function create(options?: AsyncRouterOptions): AsyncRouterInstance {
 
 //#region Private Methods
 
-function getSender(options: AsyncRouterOptions): AsyncRouterSender {
+function getSender(options?: AsyncRouterOptions): AsyncRouterSender|undefined {
     if (!options) {
         return DEFAULT_SENDER;
     }
@@ -127,15 +127,15 @@ function getSender(options: AsyncRouterOptions): AsyncRouterSender {
     }
 }
 
-function wrapAllMatchers(route: Router, sender: AsyncRouterSender, router?: Router): void {
+function wrapAllMatchers(route: Router, sender?: AsyncRouterSender, router?: Router): void {
     router = router || route as Router;
 
     SHORTCUTS_METHODS.forEach(method => {
-        (<any>route)[method] = wrapMatcher(router, (<any>route)[method], sender);
+        (<any>route)[method] = wrapMatcher(router!, (<any>route)[method], sender);
     });
 }
 
-function wrapMatcher(router: Router, routerMatcher: Function, sender: AsyncRouterSender): Function {
+function wrapMatcher(router: Router, routerMatcher: Function, sender?: AsyncRouterSender): Function {
     return (name: any, ...args: RequestHandler[]) => {
         const
             last = args.length - 1,
@@ -147,7 +147,7 @@ function wrapMatcher(router: Router, routerMatcher: Function, sender: AsyncRoute
     };
 }
 
-function wrapHandler(handler: RequestHandler, sender: AsyncRouterSender): RequestHandler {
+function wrapHandler(handler: RequestHandler, sender?: AsyncRouterSender): RequestHandler {
     return function(req, res, next): void {
         try {
             next = once(next);
